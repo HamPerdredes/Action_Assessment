@@ -1,6 +1,28 @@
 import numpy as np
+import matplotlib.pyplot as plt
+#def cal_trend(eight_angs):#考虑每30帧对个体拟合各部件的运动趋势
 
-#def cal_trend(eight_angs):
+#def trend_match(eight_angs):
+
+
+def curve_fit(data,is_show=False):#某一部件的旋转角数据,list
+    data_y=np.array(data[:])
+    flag=(data_y!=-1)
+    data_x=np.array([i for i in range(data_y.shape[0])])
+    data_x=data_x[flag]
+    data_y=data_y[flag]
+    W=np.polyfit(data_x,data_y,3)
+    if is_show :
+        f_x=np.poly1d(W)
+        print(f_x)
+        f_x=f_x(data_x)
+        plt.plot(data_x,data_y,'*',label='original')
+        plt.plot(data_x,f_x,color='b',label='fitting curve')
+        plt.xlabel('frame_num')
+        plt.ylabel('response')
+        plt.legend(loc='upper left')
+        plt.title('curve fit')
+        plt.show()
 
 
 def cal_angle(O,A,B):
@@ -74,3 +96,20 @@ def trans_data(joints):#未验证是否正确
         else :
             joint_12.append(-1)
     return [joint_2,joint_3,joint_5,joint_6,joint_8,joint_9,joint_11,joint_12]
+
+
+def load_data(file_string):
+    data=[]
+    with open(file_string,'r') as fp :#load data
+        while True :
+            lines=fp.readline()
+            if not lines :
+                break
+            tmp=[float(i) for i in lines.split()]
+            data.append(tmp)
+        data=np.array(data)
+    return data
+
+#TEST
+data=[-1,5,5,6,-1,8,9]
+curve_fit(data,is_show=True)
