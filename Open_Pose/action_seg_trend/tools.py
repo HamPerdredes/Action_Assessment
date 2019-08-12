@@ -14,6 +14,7 @@ def curve_fit(data,is_show=False):#某一部件的旋转角数据,list
     W=np.polyfit(data_x,data_y,3)
     if is_show :
         f_x=np.poly1d(W)
+        print(W)
         print(f_x)
         f_x=f_x(data_x)
         plt.plot(data_x,data_y,'*',label='original')
@@ -23,6 +24,7 @@ def curve_fit(data,is_show=False):#某一部件的旋转角数据,list
         plt.legend(loc='upper left')
         plt.title('curve fit')
         plt.show()
+    return W
 
 
 def cal_angle(O,A,B):

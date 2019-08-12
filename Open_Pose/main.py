@@ -82,7 +82,7 @@ while cv.waitKey(1) < 0:
         cv.putText(show, time_frame_label, (5, height-15), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
         video_writer.write(show)
         cv.imshow('result',show)
-        cv.waitKey(0) 
+        #cv.waitKey(0) 
     else :
         video_writer.release()
         cap.release()
